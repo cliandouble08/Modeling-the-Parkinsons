@@ -9,9 +9,13 @@ if(length(new_packages)) install.packages(new_packages)
 raw_df <- read_csv("data/ppmi_curated_data.csv")
 raw_dictionary <- read_csv("data/ppmi_curated_data_dictionary.csv")
 
-# Select row with YEAR == 0 (first visit)
-Year0_raw_df <- raw_df %>% 
-  subset(YEAR == 1)
+# Exclude rows with CONCOHORT == NA
+concohort_raw_df <- raw_df %>% 
+  filter(!is.na(CONCOHORT))
+
+# Select rows with EVENT_ID == "BL" (first visit)
+Year0_raw_df <- concohort_raw_df %>% 
+  subset(EVENT_ID == "BL")
 
 # Understand NA cases in the data
 naCount_raw_df <- Year0_raw_df %>%
@@ -29,6 +33,9 @@ raw_ci_upper_limit <- raw_ci[2]
 # Excluding all columns with na_proportion larger than 0.0847
 updated_column_list <- naCount_raw_df %>% 
   subset(na_proportion <= 0.10)
+
+removed_column_list <- naCount_raw_df %>% 
+  subset(na_proportion > 0.10)
 
 # Select filtered columns from raw_df
 df <- Year0_raw_df %>% 
