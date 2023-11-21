@@ -1,14 +1,20 @@
 # Import Packages
-libraries <- c("rethinking", "ggplot2", "dplyr", "readr", "lubridate", "tidyr")
+libraries <- c("rethinking", "ggplot2", "dplyr", "readr", "lubridate", "tidyr", 
+               "mosaic")
 
 new_packages <- libraries[!(libraries %in% installed.packages()[,"Package"])]
 if(length(new_packages)) install.packages(new_packages)
 
 # Import data files
-raw_df <- read_csv("D:/OneDrive - Grinnell College/Group Project- Parkinson's Disease/000 Datasets/999 Curated Data Cut/PPMI_Curated_Data_Cut_Public_20230612.csv")
+raw_df <- read_csv("data/ppmi_curated_data.csv")
+raw_dictionary <- read_csv("data/ppmi_curated_data_dictionary.csv")
+
+# Select row with YEAR == 0 (first visit)
+Year0_raw_df <- raw_df %>% 
+  subset(YEAR == 1)
 
 # Understand NA cases in the data
-naCount_raw_df <- raw_df %>%
+naCount_raw_df <- Year0_raw_df %>%
   summarise_all(~ sum(is.na(.))) %>%
   pivot_longer(cols = everything(), 
                names_to = "column_name", 
@@ -16,3 +22,15 @@ naCount_raw_df <- raw_df %>%
   mutate(column_number = match(column_name, names(raw_df)), 
          na_proportion = na_count / nrow(raw_df))
 
+# Confidence interval for na_proportion = (0.0169, 0.0847)
+raw_ci <- t.test(naCount_raw_df$na_proportion)$conf.int
+raw_ci_upper_limit <- raw_ci[2]
+
+# Excluding all columns with na_proportion larger than 0.0847
+updated_column_list <- naCount_raw_df %>% 
+  subset(na_proportion <= 0.10)
+
+# Select filtered columns from raw_df
+df <- Year0_raw_df %>% 
+  select(all_of(updated_column_list$column_name))
+# df: Data of the first visit for all patients (columns with na_proportion >= 0.10 were excluded)

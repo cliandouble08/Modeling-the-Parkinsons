@@ -1,0 +1,302 @@
+﻿"*Variable calculation found in ""PPMI Variable Definitions and Score Calculations"" document",,,,,,,
+,,,,,,,
+Category,Variable,Description,Code,Decode,Derived Variable,Original Variable(s),Original Dataset(s)
+ID,SITE,Blinded Site ID,-,-,Yes,CNO,Multiple
+ID,PATNO,Participant ID ,-,-,No,PATNO,Multiple
+ID,COHORT,Cohort at Enrollment,1,PD Participant,No,COHORT,STATUS
+ID,,,2,Healthy Control,,,
+ID,,,4,Prodromal ,,,
+ID,CONCOHORT,Analytic Cohort based on Consensus Committee review,1,PD Participant,No,CONCOHORT,STATUS
+ID,,,2,Healthy Control,,,
+ID,,,4,Prodromal ,,,
+ID,subgroup,Subgroup(s) based on Consensus Committee review,-,-,Yes,"CONLRRK2, CONGBA, CONSNCA, CONPRKN, CONPINK1, CONRBD, CONHPSM",STATUS
+ID,PHENOCNV,Indicates participant phenoconverted during the study based on Consensus Committee review,0,No,No,PHENOCNV,STATUS
+ID,,,1,Yes,,,
+ID,DIAG1,First phenoconversion diagnosis based on Consensus Committee review,-,-,No,DIAG1,STATUS
+ID,DIAG1VIS,Visit at first phenoconversion diagnosis based on Consensus Committee review,-,-,No,DIAG1VIS,STATUS
+ID,DIAG2,Second phenoconversion diagnosis based on Consensus Committee review,-,-,No,DIAG2,STATUS
+ID,DIAG2VIS,Visit at second phenoconversion diagnosis based on Consensus Committee review,-,-,No,DIAG2VIS,STATUS
+ID,DIAG3,Third phenoconversion diagnosis based on Consensus Committee review,-,-,No,DIAG3,STATUS
+ID,DIAG3VIS,Visit at third phenoconversion diagnosis based on Consensus Committee review,-,-,No,DIAG3VIS,STATUS
+ID,EVENT_ID,Clinical Visit Label,BL,Baseline,No,EVENT_ID,Multiple
+ID,,,PW,Premature Withdrawal visit,No,EVENT_ID,Multiple
+ID,,,ST,Symptomatic Therapy visit,No,EVENT_ID,Multiple
+ID,,,V04,Visit 4 (Year 1),No,EVENT_ID,Multiple
+ID,,,V06,Visit 6 (Year 2),No,EVENT_ID,Multiple
+ID,,,V08,Visit 8 (Year 3),No,EVENT_ID,Multiple
+ID,,,V10,Visit 10 (Year 4),No,EVENT_ID,Multiple
+ID,,,V12,Visit 12 (Year 5),No,EVENT_ID,Multiple
+ID,,,V13,Visit 13 (Year 6),No,EVENT_ID,Multiple
+ID,,,V14,Visit 14 (Year 7),No,EVENT_ID,Multiple
+ID,,,V15,Visit 15 (Year 8),No,EVENT_ID,Multiple
+ID,,,V16,Visit 16 (Year 9),No,EVENT_ID,Multiple
+ID,,,V17,Visit 17 (Year 10),No,EVENT_ID,Multiple
+ID,,,V18,Visit 18 (Year 11),No,EVENT_ID,Multiple
+ID,,,V19,Visit 19 (Year 12),No,EVENT_ID,Multiple
+ID,,,V20,Visit 20 (Year 13),No,EVENT_ID,Multiple
+ID,YEAR,Visit Year,-,-,Yes,EVENT_ID,Multiple
+ID,visit_date,"Month and Year of Clinical Visit (Note: Collection date of DATSCAN, LP, or other imaging/lab data may be different.)",-,-,No,INFODT,Multiple
+Demographics,AFICBERB,Indicator for African Berber descent,0,No,No,AFICBERB,SCREEN
+Demographics,,,1,Yes,,,
+Demographics,age,Age at Enrollment,-,-,Yes,"BIRTHDT, ENROLL_DATE","SCREEN, STATUS"
+Demographics,age_at_visit,Age at Visit,-,-,Yes,"BIRTHDT, INFODT","SCREEN, Multiple"
+Demographics,ASHKJEW,Indicator for Ashkenazi Jewish descent,0,No,No,ASHKJEW,SCREEN
+Demographics,,,1,Yes,,,
+Demographics,BASQUE,Indicator for Basque descent,0,No,No,BASQUE,SCREEN
+Demographics,,,1,Yes,,,
+Demographics,educ,Years of Education categories,1,<13 yrs,Yes,EDUCYRS,SOCIOECO
+Demographics,,,2,13-23 yrs,,,
+Demographics,,,3,>23 yrs,,,
+Demographics,EDUCYRS,Years of Education,-,-,No,EDUCYRS,SOCIOECO
+Demographics,fampd,Family History of PD - 3 categories.  NOTE: First degree family history of PD was an exclusion criterion for Healthy Controls so HCs should not be used for comparison purposes.,1,1st Degree Family w/PD,Yes,*,FAMHXPD
+Demographics,,,2,Non-1st Degree Family w/PD,,,
+Demographics,,,3,No Family w/PD,,,
+Demographics,fampd_bin,Family History of PD - Binary,1,Any Family w/PD,Yes,*,FAMHXPD
+Demographics,,,2,No Family w/PD,,,
+Demographics,handed,Handedness,1,Right,No,HANDED,SCREEN
+Demographics,,,2,Left,,,
+Demographics,,,3,Mixed,,,
+Demographics,HISPLAT,Indicator for Hispanic/Latino ethnicity,0,No,No,HISPLAT,SCREEN
+Demographics,,,1,Yes,,,
+Demographics,howlive,Gender Identity,1,Woman (or trans woman),No,HOWLIVE,SCREEN
+Demographics,,,2,Man (or trans man),,,
+Demographics,,,3,Non-binary,,,
+Demographics,,,4,Another term,,,
+Demographics,race,Race,1,White,Yes,"RAASIAN, RABLACK, RAHAWOPI, RAINDALS, RANOS, RAWHITE, RAUNKNOWN",SCREEN
+Demographics,,,2,Black,,,
+Demographics,,,3,Asian,,,
+Demographics,,,4,Other (includes multi-racial),,,
+Demographics,SEX,Sex at birth,1,Male,No,SEX,SCREEN
+Demographics,,,0,Female,,,
+Demographics,sex_orient,Sexual Orientation,1,Gay/Lesbian,Yes,"GAYLES, HETERO, BISEXUAL, PANSEXUAL, ASEXUAL, OTHSEXUALITY",SCREEN
+Demographics,,,2,Heterosexual,,,
+Demographics,,,3,Bisexual,,,
+Demographics,,,4,Pansexual,,,
+Demographics,,,5,Asexual,,,
+Demographics,,,9,Other (includes multiple),,,
+Genetics,APOE,APOE Genotype,-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Genetics,APOE_e4,Number of e4 alleles in APOE Gene,-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,abeta,CSF A-beta 1-42 (combined 2016/2021 assays),-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,abeta_LLOD,Indicates whether CSF A-beta 1-42 test result was equal or below the LOWER limit of detection (<= 200 pg/mL),0,No,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,,,1,Yes,,,
+Biologics,abeta_ULOD,Indicates whether CSF A-beta 1-42 test result was above the UPPER limit of detection (>= 1475.4 pg/mL),0,No,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,,,1,Yes,,,
+Biologics,asyn,CSF Alpha-synuclein (2016 assay),-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,ptau,CSF p-tau (combined 2016/2021 assays),-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,ptau_LLOD,Indicates whether CSF p-tau test result was equal or below the LOWER limit of detection (<= 8 pg/mL),0,No,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,,,1,Yes,,,
+Biologics,tau,CSF t-tau (combined 2016/2021 assays),-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,tau_LLOD,Indicates whether CSF t-tau test result was equal or below the LOWER limit of detection (<= 80 pg/mL),0,No,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,,,1,Yes,,,
+Biologics,urate,Serum Uric Acid (mg/dL),-,-,Yes,*,COVANCE
+Biologics,hemohi,Indicator of high CSF hemoglobin (2016 assay),0,<200 ,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,,,1,>=200 ,,,
+Biologics,total_di_18_1_BMP,Urine BMP Total di‐18:1 Species,-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,total_di_22_6_BMP,Urine BMP Total di‐22:6 Species,-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,_2_2__di_22_6_BMP,"Urine BMP 2,2' di-22:6 Species",-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,CSFSAA,CSF SAA combined results (Note: Results not shown for Prodromal cohort),-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,nfl_csf,CSF Neurofilament Light,-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+Biologics,nfl_serum,Serum Neurofilament Light,-,-,Yes,"testname, testvalue",Biospecimen_Analysis
+DATSCAN,con_caudate,Contralateral caudate (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, PDDXHIST"
+DATSCAN,con_putamen,Contralateral putamen (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, PDDXHIST"
+DATSCAN,con_striatum,Contralateral striatum (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, PDDXHIST"
+DATSCAN,DATSCAN_CAUDATE_L,Left caudate (Note: Results not shown for Prodromal cohort),-,-,No,DATSCAN_CAUDATE_L,Datscan_Analysis
+DATSCAN,DATSCAN_CAUDATE_R,Right caudate (Note: Results not shown for Prodromal cohort),-,-,No,DATSCAN_CAUDATE_R,Datscan_Analysis
+DATSCAN,DATSCAN_PUTAMEN_L,Left putamen (Note: Results not shown for Prodromal cohort),-,-,No,DATSCAN_PUTAMEN_L,Datscan_Analysis
+DATSCAN,DATSCAN_PUTAMEN_R,Right putamen (Note: Results not shown for Prodromal cohort),-,-,No,DATSCAN_PUTAMEN_R,Datscan_Analysis
+DATSCAN,ips_caudate,Ipsliateral caudate (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, PDDXHIST"
+DATSCAN,ips_putamen,Ipsilateral putamen (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, PDDXHIST"
+DATSCAN,ips_striatum,Ipsilateral striatum (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, PDDXHIST"
+DATSCAN,lowput_ratio,DATSCAN Age-/Sex-expected Lowest Putamen Ratio (Note: Results not shown for Prodromal cohort),-,-,Yes,*,"Datscan_Analysis, SCREEN"
+DATSCAN,mean_caudate,Mean caudate measure (Note: Results not shown for Prodromal cohort),-,-,Yes,"mean of DATSCAN_CAUDATE_R, DATSCAN_CAUDATE_L",Datscan_Analysis
+DATSCAN,mean_putamen,Mean putamen measure (Note: Results not shown for Prodromal cohort),-,-,Yes,"mean of DATSCAN_PUTAMEN_R, DATSCAN_PUTAMEN_L",Datscan_Analysis
+DATSCAN,mean_striatum,Mean striatum measure (Note: Results not shown for Prodromal cohort),-,-,Yes,"mean of DATSCAN_CAUDATE_R, DATSCAN_CAUDATE_L, DATSCAN_PUTAMEN_R, DATSCAN_PUTAMEN_L",Datscan_Analysis
+Clinical,agediag,Age at PD Diagnosis,-,-,Yes,"BIRTHDT, PDDXDT","SCREEN, PDDXHIST"
+Clinical,ageonset,Age at PD Symptom Onset,-,-,Yes,"BIRTHDT, SXMO, SXYEAR","SCREEN, PDDXHIST"
+Clinical,age_LP,Age at LP,-,-,Yes,"BIRTHDT, CSFDT","SCREEN, LUMBAR"
+Clinical,age_DATSCAN,Age at Datscan,-,-,Yes,"BIRTHDT, INFODT","SCREEN, DATSCAN"
+Clinical,age_upsit,Age at UPSIT,-,-,Yes,"BIRTHDT, INFODT","SCREEN, UPSIT"
+Clinical,bjlot,Benton Judgement of Line Orientation Score,-,-,Yes,sum of BJLOT1 - BJLOT30,LINEORNT
+Clinical,BMI,Body Mass Index,-,-,Yes,"HTCM, WGTKG",VITAL
+Clinical,clockdraw,Total Clock Drawing Score,-,-,Yes,"sum of CLCKPII, CLCK2HND, CLCKNMRK, CLCKNUIN, CLCKALNU, CLCKNUSP, CLCKNUED",CLCKDRAW
+Clinical,cogstate,Investigator Diagnosis of Cognitive State,1,Normal Cognition,No,COGSTATE,COGCATG
+Clinical,,,2,Mild Cognitive Impairment ,,,
+Clinical,,,3,Dementia,,,
+Clinical,DOMSIDE,Side most affected at PD symptom onset,1,Left,No,DOMSIDE,PDDXHIST
+Clinical,,,2,Right,,,
+Clinical,,,3,Symmetric,,,
+Clinical,duration,Duration from PD Diagnosis to Enrollment (Months),-,-,Yes,"PDDXDT, ENROLLDT","PDDXHIST, SCREEN"
+Clinical,duration_yrs,Duration from PD Diagnosis to Enrollment (Years),-,-,Yes,"PDDXDT, ENROLLDT","PDDXHIST, SCREEN"
+Clinical,ess,Epworth Sleepiness Scale Score,-,-,Yes,sum of ESS1 - ESS8,EPWORTH
+Clinical,gds,Geriatric Depression Scale Score,-,-,Yes,*,GDSSHORT
+Clinical,hvlt_discrimination,HVLT Discrimination Recognition,-,-,Yes,*,HVLT
+Clinical,hvlt_immediaterecall,HVLT Immediate/Total Recall,-,-,Yes,sum of HVLTRT1 - HVLTRT3,HVLT
+Clinical,hvlt_retention,HVLT Retention,-,-,Yes,*,HVLT
+Clinical,HVLTFPRL,HVLT False Alarms,-,-,No,HVLTFPRL,HVLT
+Clinical,HVLTRDLY,HVLT Delayed Recall ,-,-,No,HVLTRDLY,HVLT
+Clinical,HVLTREC,HVLT Delayed Recognition,-,-,No,HVLTREC,HVLT
+Clinical,hy,Reclassified Hoehn & Yahr (includes OFF and untreated scores),0,Stage 0,Yes,NHY,NUPDRS3
+Clinical,,,1,Stage 1,,,
+Clinical,,,2,Stage 2,,,
+Clinical,,,3,Stages 3-5,,,
+Clinical,hy_on,Reclassified Hoehn & Yahr (includes ON and untreated scores),0,Stage 0,Yes,NHY,NUPDRS3
+Clinical,,,1,Stage 1,,,
+Clinical,,,2,Stage 2,,,
+Clinical,,,3,Stages 3-5,,,
+Clinical,NHY,Hoehn & Yahr Stage (includes OFF and untreated scores),0,Stage 0,No,NHY,NUPDRS3
+Clinical,,,1,Stage 1,,,
+Clinical,,,2,Stage 2,,,
+Clinical,,,3,Stage 3,,,
+Clinical,,,4,Stage 4,,,
+Clinical,,,5,Stage 5,,,
+Clinical,NHY_ON,Hoehn & Yahr Stage (includes ON and untreated scores),0,Stage 0,No,NHY,NUPDRS3
+Clinical,,,1,Stage 1,,,
+Clinical,,,2,Stage 2,,,
+Clinical,,,3,Stage 3,,,
+Clinical,,,4,Stage 4,,,
+Clinical,,,5,Stage 5,,,
+Clinical,LEDD,Total Levodopa Equivalent Daily Dose,-,-,Yes,*,LEDDLOG
+Clinical,lexical,Lexical Fluency Score,-,-,Yes,"sum of LXFLUEF, LXFLUEA, LXFLUES",LEXICAL
+Clinical,lns,Letter Number Sequencing Score,-,-,Yes,sum of LNS1A - LNS7C,LNSPD
+Clinical,MCI_testscores,MCI based on cognitive test scores (at least two cognitive test scores >1.5 SD below standardized mean),0,Normal Cognition,Yes,*,Multiple
+Clinical,,,1,Test-based Mild Cognitive Impairment,,,
+Clinical,moca,MOCA Score (adjusted for education),-,-,Yes,*,"MOCA, SOCIO"
+Clinical,MODBNT,Modified Boston Naming Test Score,-,-,No,MBSTNCRR,MODBSTN
+Clinical,MSEADLG,Modified Schwab & England ADL Score,-,-,No,MSEADLG,MODSEADL
+Clinical,NP1ANXS,MDS-UPDRS Part I Anxious Mood,0,Normal,No,NP1ANXS,NUPDRS1
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,NP1APAT ,MDS-UPDRS Part I Apathy,0,Normal,No,NP1APAT ,NUPDRS1
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,NP1COG,MDS-UPDRS Part I Cognitive Impairment,0,Normal,No,NP1COG,NUPDRS1
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,NP1DDS,MDS-UPDRS Part I Features of Dopamine Dysregulation Syndrome,0,Normal,No,NP1DDS,NUPDRS1
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,NP1DPRS,MDS-UPDRS Part I Depressed Mood,0,Normal,No,NP1DPRS,NUPDRS1
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,NP1FATG,MDS-UPDRS Part I Fatigue,0,Normal,No,NP1FATG,NUPDRS1P
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,NP1HALL,MDS-UPDRS Part I Hallucinations and Psychosis,0,Normal,No,NP1HALL,NUPDRS1
+Clinical,,,1,Slight,,,
+Clinical,,,2,Mild,,,
+Clinical,,,3,Moderate,,,
+Clinical,,,4,Severe,,,
+Clinical,orthostasis,Indicator of whether systolic blood pressure change is greater or equal to 20 OR diastolic blood pressure change is greater than or equal to 10.,0,No,Yes,"SYSSUP, SYSSTND, DIASUP, DIASTND",VITAL
+Clinical,,,1,Yes,,,
+Clinical,OTHNEURO,Comment for most likely Primary Diagnosis (other),-,-,No,OTHNEURO,PRIMDXPD
+Clinical,PDTRTMNT,Is the participant on dopaminergic medication or receiving deep brain stimulation for treating the symptoms of Parkinsons disease?,0,No,No,PDTRTMNT,NUPDRS3
+Clinical,,,1,Yes,,,
+Clinical,pigd,PIGD OFF score (includes OFF and untreated scores),-,-,Yes,*,"NUPDRS2, NUPDRS3"
+Clinical,pigd_on,PIGD ON score (includes ON and untreated scores),-,-,Yes,*,"NUPDRS2, NUPDRS3"
+Clinical,PRIMDIAG,Most likely Primary Diagnosis,1,Idiopathic PD,No,PRIMDIAG,PRIMDXPD
+Clinical,,,2,Alzheimer's disease,,,
+Clinical,,,3,Frontotemporal dementia,,,
+Clinical,,,4,Corticobasal syndrome,,,
+Clinical,,,5,Dementia with Lewy bodies,,,
+Clinical,,,6,Dopa-responsive dystonia,,,
+Clinical,,,7,Essential tremor,,,
+Clinical,,,8,Hemiparkinson/hemiatrophy syndrome,,,
+Clinical,,,9,Juvenile autosomal recessive parkinsonism,,,
+Clinical,,,10,Motor neuron disease with parkinsonism,,,
+Clinical,,,11,Multiple system atrophy,,,
+Clinical,,,12,Neuroleptic-induced parkinsonism,,,
+Clinical,,,13,Normal pressure hydrocephalus,,,
+Clinical,,,14,Progressive supranuclear palsy,,,
+Clinical,,,15,Psychogenic parkinsonism,,,
+Clinical,,,16,Vascular parkinsonism,,,
+Clinical,,,17,No PD nor other neurological disorder,,,
+Clinical,,,18,Spinocerebellar Ataxia (SCA),,,
+Clinical,,,23,Prodromal non-motor PD,,,
+Clinical,,,24,Prodromal motor PD,,,
+Clinical,,,25,Prodromal Synucleinopathy,,,
+Clinical,,,97,Other neurological disorder(s),,,
+Clinical,quip,QUIP Score,-,-,Yes,*,QUIPCS
+Clinical,quip_any,Any QUIP disorder,0,No QUIP Disorders,Yes,*,QUIPCS
+Clinical,,,1,Any 1 or more disorders,,,
+Clinical,quip_buy,QUIP disorder - Buying,0,No disorder,Yes,"tmbuy, cntrlbuy",QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,quip_eat,QUIP disorder - Eating,0,No disorder,Yes,"tmeat, cntrleat",QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,quip_gamble,QUIP disorder - Gambling,0,No disorder,Yes,"cntrlgmb, tmgamble",QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,quip_hobby,QUIP disorder - Hobbies,0,No disorder,Yes,tmtoract,QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,quip_pund,QUIP disorder - Punding,0,No disorder,Yes,tmtmtact,QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,quip_sex,QUIP disorder - Sex,0,No disorder,Yes,"cntrlsex, tmsex",QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,quip_walk,QUIP disorder - Walking or Driving,0,No disorder,Yes,tmtrwd,QUIPCS
+Clinical,,,1,Disorder present,,,
+Clinical,rem,REM Sleep Behavior Disorder Questionnaire Score,-,-,Yes,*,REMSLEEP
+Clinical,scopa,SCOPA-AUT Total Score,-,-,Yes,*,SCOPAAUT
+Clinical,scopa_cv,SCOPA-AUT Cardiovascular Score,-,-,Yes,*,SCOPAAUT
+Clinical,scopa_gi,SCOPA-AUT Gastrointestinal (GI) Score,-,-,Yes,*,SCOPAAUT
+Clinical,scopa_pm,SCOPA-AUT Pupillomotor Score,-,-,Yes,*,SCOPAAUT
+Clinical,scopa_sex,SCOPA-AUT Sexual Dysfunction Score,-,-,Yes,*,SCOPAAUT
+Clinical,scopa_therm,SCOPA-AUT Thermoregulatory Score,-,-,Yes,*,SCOPAAUT
+Clinical,scopa_ur,SCOPA-AUT Urinary Score,-,-,Yes,*,SCOPAAUT
+Clinical,SDMTOTAL,Symbol Digit Modalities Score,-,-,No,SDMTOTAL,SDM
+Clinical,stai,STAI Total Score,-,-,Yes,*,STAI
+Clinical,stai_state,STAI State Sub-score,-,-,Yes,*,STAI
+Clinical,stai_trait,STAI Trait Sub-score,-,-,Yes,*,STAI
+Clinical,sym_tremor,Initial symptom (at diagnosis) - Resting Tremor,0,No symptom or unknown,Yes,DXTREMOR,PDDXHIST
+Clinical,,,1,Symptom present at diagnosis,,,
+Clinical,sym_rigid,Initial symptom (at diagnosis) - Rigidity,0,No symptom or unknown,Yes,DXRIGID,PDDXHIST
+Clinical,,,1,Symptom present at diagnosis,,,
+Clinical,sym_brady,Initial symptom (at diagnosis) - Bradykinesia,0,No symptom or unknown,Yes,DXBRADY,PDDXHIST
+Clinical,,,1,Symptom present at diagnosis,,,
+Clinical,sym_posins,Initial symptom (at diagnosis) - Postural Instability ,0,No symptom or unknown,Yes,DXPOSINS,PDDXHIST
+Clinical,,,1,Symptom present at diagnosis,,,
+Clinical,sym_other,Initial symptom (at diagnosis) - Other,0,No other symptoms or unknown,Yes,DXOTHSX,PDDXHIST
+Clinical,,,1,Other symptoms present at diagnosis,,,
+Clinical,sym_unknown,Missing initial symptoms,0,Not missing Initial Symptom data,Yes,all initial symptom variables are missing or unknown,PDDXHIST
+Clinical,,,1,Missing all Initial Symptom data,,,
+Clinical,td_pigd,TD/PIGD classification OFF - 2 categories (includes OFF and untreated scores),1,TD,Yes,*,"NUPDRS2P, NUPDRS3"
+Clinical,,,2,non-TD (PIGD or Indeterminate),,,
+Clinical,td_pigd_on,TD/PIGD classification ON - 2 categories (includes ON and untreated scores),1,TD,Yes,*,"NUPDRS2P, NUPDRS3"
+Clinical,,,2,non-TD (PIGD or Indeterminate),,,
+Clinical,TMT_A,Trails Making Test - A,-,-,Yes,"TMTASEC, TMTACMPL",TMT
+Clinical,TMT_B,Trails Making Test - B,-,-,Yes,"TMTBSEC, TMTBCMPL",TMT
+Clinical,updrs1_score,MDS-UPDRS Part I Score,-,-,Yes,*,"NUPDRS1, NUPDRS1P"
+Clinical,updrs2_score,MDS-UPDRS Part II Score,-,-,Yes,*,NUPDRS2P
+Clinical,updrs3_score,MDS-UPDRS Part III Score OFF (includes OFF and untreated scores),-,-,Yes,*,NUPDRS3
+Clinical,updrs3_score_on,MDS-UPDRS Part III Score ON (includes ON and untreated scores),-,-,Yes,*,NUPDRS3
+Clinical,updrs4_score,MDS-UPDRS Part IV Score,-,-,Yes,*,NUPDRS4
+Clinical,updrs_totscore,MDS-UPDRS Total Score OFF (includes OFF and untreated scores),-,-,Yes,"sum of MDS-UPDRS Parts I, II, III OFF","NUPDRS1, NUPDRS1P, NUPDRS2P, NUPDRS3"
+Clinical,updrs_totscore_on,MDS-UPDRS Total Score ON (includes ON and untreated scores),-,-,Yes,"sum of MDS-UPDRS Parts I, II, III ON","NUPDRS1, NUPDRS1P, NUPDRS2P, NUPDRS3"
+Clinical,upsit,UPSIT Raw Score,-,-,Yes,sum of SCENT_01_CORRECT - SCENT_40_CORRECT,UPSIT
+Clinical,upsit_pctl,UPSIT Age-/Sex-Adjusted Percentile,-,-,Yes,*,"UPSIT, SCREEN"
+Clinical,upsit_pctl15,Indicates whether UPSIT percentile is <= 15%,0,<=15% (hyposmia),Yes,*,"UPSIT, SCREEN"
+Clinical,,,1,>15% (normosmia),,,
+Clinical,VLTANIM,Semantic Fluency Score - Animal subscore,-,-,No,VLTANIM,SFT
+Milestones,pm_adl_any,Progression Milestones - Indicator for any activities of daily living milestone,0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
+Milestones,pm_any,Progression Milestones - Indicator for any milestone (any domain),0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
+Milestones,pm_auto_any,Progression Milestones - Indicator for any autonomic dysfunction milestone,0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
+Milestones,pm_cog_any,Progression Milestones - Indicator for any cognition milestone,0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
+Milestones,pm_fd_any,Progression Milestones - Indicator for any functional dependence milestone,0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
+Milestones,pm_mc_any,Progression Milestones - Indicator for any motor complications milestone,0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
+Milestones,pm_wb_any,Progression Milestones - Indicator for any walking and balance milestone,0,No,Yes,*,Multiple
+Milestones,,,1,Yes,,,
