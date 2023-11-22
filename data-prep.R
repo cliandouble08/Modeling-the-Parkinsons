@@ -1,10 +1,3 @@
-# Import Packages
-libraries <- c("rethinking", "ggplot2", "dplyr", "readr", "lubridate", "tidyr", 
-               "mosaic")
-
-new_packages <- libraries[!(libraries %in% installed.packages()[,"Package"])]
-if(length(new_packages)) install.packages(new_packages)
-
 # Import data files
 raw_df <- read_csv("data/ppmi_curated_data.csv")
 raw_dictionary <- read_csv("data/ppmi_curated_data_dictionary.csv")
