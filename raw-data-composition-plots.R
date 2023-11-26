@@ -56,3 +56,47 @@ pie_chart_column_class <- ggplot(df_column_class_summary,
 ggsave("figures/pre-analysis/pie_column_class.png", 
        plot = pie_chart_column_class,
        width = 5, height = 5, dpi = 1000)
+
+# Difference between age_at_visit and agediag, ageonset, age_LP, age_DATSCAN, age_upsit
+df <- df %>%
+  mutate(across(c(agediag, ageonset, age_LP, age_DATSCAN, age_upsit), ~na_if(.x, ".")))
+
+df_age_difference <- df %>% 
+  mutate(
+    # Convert columns to numeric
+    agediag = as.numeric(agediag),
+    ageonset = as.numeric(ageonset),
+    age_LP = as.numeric(age_LP),
+    age_DATSCAN = as.numeric(age_DATSCAN),
+    age_upsit = as.numeric(age_upsit),
+    
+    # Calculate differences
+    age_at_visit_agediag = ifelse(is.na(agediag), NA, age_at_visit - agediag),
+    age_at_visit_ageonset = ifelse(is.na(ageonset), NA, age_at_visit - ageonset),
+    age_at_visit_LP = ifelse(is.na(age_LP), NA, age_at_visit - age_LP),
+    age_at_visit_DATSCAN = ifelse(is.na(age_DATSCAN), NA, age_at_visit - age_DATSCAN),
+    age_at_visit_upsit = ifelse(is.na(age_upsit), NA, age_at_visit - age_upsit)
+  )
+
+df_age_difference_long <- df_age_difference %>%
+  pivot_longer(
+    cols = starts_with("age_at_visit_"),
+    names_to = "variable",
+    values_to = "value"
+  )
+
+violin_age_difference <- ggplot(data = df_age_difference_long) +
+  geom_violin(aes(x = variable, y = value, fill = variable)) +
+  geom_hline(yintercept = 10, linetype = "dashed", 
+             col = "darkred", lwd = 1, alpha = 0.5) +
+  theme_classic() +
+  scale_y_log10() +
+  labs(y = "Age Difference from Age at Visit") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+        axis.title.x = element_blank(), 
+        legend.position = "none") +
+  scale_fill_viridis(discrete = TRUE, alpha = 0.5)
+
+ggsave("figures/pre-analysis/violin_age_difference_from_age_of_visit.png", 
+       plot = violin_age_difference,
+       width = 5, height = 5, dpi = 1000)

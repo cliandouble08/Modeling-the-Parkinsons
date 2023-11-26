@@ -1,5 +1,5 @@
 # List of required packages
-required_packages <- c("rethinking", "ggplot2", "viridis", "dplyr", "readr", "lubridate", "tidyr", "mosaic", "scales")
+required_packages <- c("rethinking", "ggplot2", "viridis", "dplyr", "readr", "lubridate", "tidyr", "mosaic", "scales", "GGally", "lsr")
 
 # Function to install missing packages
 install_missing_packages <- function(packages) {
@@ -16,5 +16,5 @@ install_missing_packages(required_packages)
 
 # Load the packages into the environment
 for (package in required_packages) {
-  library(package, character.only = TRUE)
+  library(package, character.only = TRUE, quietly = TRUE)
 }

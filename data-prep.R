@@ -2,8 +2,23 @@
 raw_df <- read_csv("data/ppmi_curated_data.csv")
 raw_dictionary <- read_csv("data/ppmi_curated_data_dictionary.csv")
 
+# Replace missing values as NA
+## Function to replace "." with NA appropriately
+replace_dot_with_NA <- function(column) {
+  if (is.factor(column)) {
+    levels(column) <- replace(levels(column), levels(column) == ".", NA)
+    return(column)
+  } else {
+    return(ifelse(column == ".", NA, column))
+  }
+}
+
+## Apply the function to each column of the dataframe
+raw_df_na_updated <- raw_df %>% 
+  mutate(across(everything(), replace_dot_with_NA))
+
 # Exclude rows with CONCOHORT == NA
-concohort_raw_df <- raw_df %>% 
+concohort_raw_df <- raw_df_na_updated %>% 
   filter(!is.na(CONCOHORT))
 
 # Select rows with EVENT_ID == "BL" (first visit)
