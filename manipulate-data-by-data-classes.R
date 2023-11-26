@@ -2,14 +2,14 @@
 # Set aside PATNO column
 cols_to_adjust <- setdiff(names(numeric_df_selected), "PATNO")
 
-std_numeric_df_selected <- numeric_df_selected
+updated_numeric_df_selected <- numeric_df_selected
 
 # Change all columns to numeric class
-std_numeric_df_selected[cols_to_adjust] <- lapply(std_numeric_df_selected[cols_to_adjust], 
+updated_numeric_df_selected[cols_to_adjust] <- lapply(updated_numeric_df_selected[cols_to_adjust], 
                                                        function(x) as.numeric(as.character(x)))
 
 # Standardize all numeric columns
-std_numeric_df_selected[cols_to_adjust] <- lapply(std_numeric_df_selected[cols_to_adjust], scale)
+updated_numeric_df_selected[cols_to_adjust] <- lapply(updated_numeric_df_selected[cols_to_adjust], scale)
 
 # binomial_df_selected -----
 ## Some binomial variables have levels of 1 and 2, while most columns have 0 and 1
@@ -25,7 +25,7 @@ updated_binomial_selected_df[cols_to_adjust] <- lapply(updated_binomial_selected
                                                        function(x) as.numeric(as.character(x)))
 
 # Adjust binomial levels to all 0 and 1
-updated_binomial_selected_df[cols_to_adjust] <- lapply(updated_binomial_selected_df[cols_to_adjust], function(x) if(max(x, na.rm = TRUE) == 2) x - 1 else x)
+updated_binomial_selected_df[cols_to_adjust] <- lapply(updated_binomial_selected_df[cols_to_adjust], function(x) if(min(x, na.rm = TRUE) == 0) x + 1 else x)
 
 # ordered_df_selected -----
 ## Some ordered categorical variables starts at level 1, reset it so it centers at 0
@@ -40,7 +40,7 @@ updated_ordered_df_selected[cols_to_adjust] <- lapply(updated_ordered_df_selecte
                                                        function(x) as.numeric(as.character(x)))
 
 # Adjust binomial levels to all 0 and 1
-updated_ordered_df_selected[cols_to_adjust] <- lapply(updated_ordered_df_selected[cols_to_adjust], function(x) if(min(x, na.rm = TRUE) == 1) x - 1 else x)
+updated_ordered_df_selected[cols_to_adjust] <- lapply(updated_ordered_df_selected[cols_to_adjust], function(x) if(min(x, na.rm = TRUE) == 0) x + 1 else x)
 
 # qualitative_df_selected -----
 ## Some columns were not converted into dummy variables
@@ -59,7 +59,7 @@ updated_qualitative_df_selected[cols_to_adjust] <- lapply(updated_qualitative_df
                                                       function(x) as.numeric(as.character(x)))
 
 # Adjust binomial levels to all 0 and 1
-updated_qualitative_df_selected[cols_to_adjust] <- lapply(updated_qualitative_df_selected[cols_to_adjust], function(x) if(min(x, na.rm = TRUE) == 1) x - 1 else x)
+updated_qualitative_df_selected[cols_to_adjust] <- lapply(updated_qualitative_df_selected[cols_to_adjust], function(x) if(min(x, na.rm = TRUE) == 0) x + 1 else x)
 
 # fundamental_df_selected -----
 ## Some columns were not converted into dummy variables
@@ -79,3 +79,10 @@ updated_fundamental_df_selected[cols_to_adjust] <- lapply(updated_fundamental_df
 
 # Adjust binomial levels to all 0 and 1
 updated_fundamental_df_selected[cols_to_adjust] <- lapply(updated_fundamental_df_selected[cols_to_adjust], function(x) if(min(x, na.rm = TRUE) == 1) x - 1 else x)
+
+# Create a stand-alone response variable dataframe
+## Only columns: PATNO, CONCOHORT
+## Remove rows with CONCOHORT NA
+response_var_df <- updated_fundamental_df_selected %>% 
+  select(PATNO, CONCOHORT) %>% 
+  filter(!is.na(CONCOHORT))

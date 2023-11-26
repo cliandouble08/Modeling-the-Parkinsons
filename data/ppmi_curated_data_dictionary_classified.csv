@@ -1,19 +1,16 @@
-﻿Category,Data Class,Variable,Description,Original Variable(s),Original Dataset(s)
+Category,Data Class,Variable,Description,Original Variable(s),Original Dataset(s)
 Biologics,numeric,_2_2__di_22_6_BMP,"Urine BMP 2,2' di-22:6 Species","testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,abeta,CSF A-beta 1-42 (combined 2016/2021 assays),"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,asyn,CSF Alpha-synuclein (2016 assay),"testname, testvalue",Biospecimen_Analysis
 Biologics,binomial,hemohi,Indicator of high CSF hemoglobin (2016 assay),"testname, testvalue",Biospecimen_Analysis
-Biologics,numeric,nfl_csf,CSF Neurofilament Light,"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,nfl_serum,Serum Neurofilament Light,"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,ptau,CSF p-tau (combined 2016/2021 assays),"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,tau,CSF t-tau (combined 2016/2021 assays),"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,total_di_18_1_BMP,Urine BMP Total di‐18:1 Species,"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,total_di_22_6_BMP,Urine BMP Total di‐22:6 Species,"testname, testvalue",Biospecimen_Analysis
 Biologics,numeric,urate,Serum Uric Acid (mg/dL),*,COVANCE
-Biologics,binomial,,,,
 Clinical,numeric,bjlot,Benton Judgement of Line Orientation Score,sum of BJLOT1 - BJLOT30,LINEORNT
 Clinical,numeric,BMI,Body Mass Index,"HTCM, WGTKG",VITAL
-Clinical,numeric,clockdraw,Total Clock Drawing Score,"sum of CLCKPII, CLCK2HND, CLCKNMRK, CLCKNUIN, CLCKALNU, CLCKNUSP, CLCKNUED",CLCKDRAW
 Clinical,ordered,cogstate,Investigator Diagnosis of Cognitive State,COGSTATE,COGCATG
 Clinical,numeric,ess,Epworth Sleepiness Scale Score,sum of ESS1 - ESS8,EPWORTH
 Clinical,numeric,gds,Geriatric Depression Scale Score,*,GDSSHORT
@@ -21,18 +18,16 @@ Clinical,numeric,hvlt_discrimination,HVLT Discrimination Recognition,*,HVLT
 Clinical,numeric,hvlt_immediaterecall,HVLT Immediate/Total Recall,sum of HVLTRT1 - HVLTRT3,HVLT
 Clinical,numeric,hvlt_retention,HVLT Retention,*,HVLT
 Clinical,numeric,HVLTFPRL,HVLT False Alarms,HVLTFPRL,HVLT
-Clinical,numeric,HVLTRDLY,HVLT Delayed Recall ,HVLTRDLY,HVLT
+Clinical,numeric,HVLTRDLY,HVLT Delayed Recall,HVLTRDLY,HVLT
 Clinical,numeric,HVLTREC,HVLT Delayed Recognition,HVLTREC,HVLT
 Clinical,ordered,hy,Reclassified Hoehn & Yahr (includes OFF and untreated scores),NHY,NUPDRS3
-Clinical,numeric,lexical,Lexical Fluency Score,"sum of LXFLUEF, LXFLUEA, LXFLUES",LEXICAL
 Clinical,numeric,lns,Letter Number Sequencing Score,sum of LNS1A - LNS7C,LNSPD
-Clinical,binomial,MCI_testscores,MCI based on cognitive test scores (at least two cognitive test scores >1.5 SD below standardized mean),*,Multiple
+Clinical,numeric,MCI_testscores,MCI based on cognitive test scores (at least two cognitive test scores >1.5 SD below standardized mean),*,Multiple
 Clinical,numeric,moca,MOCA Score (adjusted for education),*,"MOCA, SOCIO"
-Clinical,numeric,MODBNT,Modified Boston Naming Test Score,MBSTNCRR,MODBSTN
 Clinical,numeric,MSEADLG,Modified Schwab & England ADL Score,MSEADLG,MODSEADL
 Clinical,ordered,NHY,Hoehn & Yahr Stage (includes OFF and untreated scores),NHY,NUPDRS3
 Clinical,ordered,NP1ANXS,MDS-UPDRS Part I Anxious Mood,NP1ANXS,NUPDRS1
-Clinical,ordered,NP1APAT ,MDS-UPDRS Part I Apathy,NP1APAT ,NUPDRS1
+Clinical,ordered,NP1APAT,MDS-UPDRS Part I Apathy,NP1APAT,NUPDRS1
 Clinical,ordered,NP1COG,MDS-UPDRS Part I Cognitive Impairment,NP1COG,NUPDRS1
 Clinical,ordered,NP1DDS,MDS-UPDRS Part I Features of Dopamine Dysregulation Syndrome,NP1DDS,NUPDRS1
 Clinical,ordered,NP1DPRS,MDS-UPDRS Part I Depressed Mood,NP1DPRS,NUPDRS1
@@ -64,72 +59,14 @@ Clinical,quantitative,stai_state,STAI State Sub-score,*,STAI
 Clinical,quantitative,stai_trait,STAI Trait Sub-score,*,STAI
 Clinical,binomial,sym_brady,Initial symptom (at diagnosis) - Bradykinesia,DXBRADY,PDDXHIST
 Clinical,binomial,sym_other,Initial symptom (at diagnosis) - Other,DXOTHSX,PDDXHIST
-Clinical,binomial,sym_posins,Initial symptom (at diagnosis) - Postural Instability ,DXPOSINS,PDDXHIST
+Clinical,binomial,sym_posins,Initial symptom (at diagnosis) - Postural Instability,DXPOSINS,PDDXHIST
 Clinical,binomial,sym_rigid,Initial symptom (at diagnosis) - Rigidity,DXRIGID,PDDXHIST
 Clinical,binomial,sym_tremor,Initial symptom (at diagnosis) - Resting Tremor,DXTREMOR,PDDXHIST
 Clinical,binomial,sym_unknown,Missing initial symptoms,all initial symptom variables are missing or unknown,PDDXHIST
 Clinical,binomial,td_pigd,TD/PIGD classification OFF - 2 categories (includes OFF and untreated scores),*,"NUPDRS2P, NUPDRS3"
-Clinical,numeric,TMT_A,Trails Making Test - A,"TMTASEC, TMTACMPL",TMT
-Clinical,numeric,TMT_B,Trails Making Test - B,"TMTBSEC, TMTBCMPL",TMT
 Clinical,numeric,updrs_totscore,MDS-UPDRS Total Score OFF (includes OFF and untreated scores),"sum of MDS-UPDRS Parts I, II, III OFF","NUPDRS1, NUPDRS1P, NUPDRS2P, NUPDRS3"
 Clinical,numeric,upsit,UPSIT Raw Score,sum of SCENT_01_CORRECT - SCENT_40_CORRECT,UPSIT
 Clinical,numeric,VLTANIM,Semantic Fluency Score - Animal subscore,VLTANIM,SFT
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,binomial,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
-Clinical,ordered,,,,
 Demographics,binomial,AFICBERB,Indicator for African Berber descent,AFICBERB,SCREEN
 Demographics,numeric,age_at_visit,Age at Visit,"BIRTHDT, INFODT","SCREEN, Multiple"
 Demographics,binomial,ASHKJEW,Indicator for Ashkenazi Jewish descent,ASHKJEW,SCREEN
@@ -138,41 +75,14 @@ Demographics,numeric,EDUCYRS,Years of Education,EDUCYRS,SOCIOECO
 Demographics,ordered,fampd,Family History of PD - 3 categories.  NOTE: First degree family history of PD was an exclusion criterion for Healthy Controls so HCs should not be used for comparison purposes.,*,FAMHXPD
 Demographics,categorical,handed,Handedness,HANDED,SCREEN
 Demographics,binomial,HISPLAT,Indicator for Hispanic/Latino ethnicity,HISPLAT,SCREEN
-Demographics,categorical,howlive,Gender Identity,HOWLIVE,SCREEN
 Demographics,categorical,race,Race,"RAASIAN, RABLACK, RAHAWOPI, RAINDALS, RANOS, RAWHITE, RAUNKNOWN",SCREEN
 Demographics,binomial,SEX,Sex at birth,SEX,SCREEN
-Demographics,categorical,sex_orient,Sexual Orientation,"GAYLES, HETERO, BISEXUAL, PANSEXUAL, ASEXUAL, OTHSEXUALITY",SCREEN
-Demographics,binomial,,,,
-Demographics,binomial,,,,
-Demographics,binomial,,,,
-Demographics,binomial,,,,
-Demographics,binomial,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,categorical,,,,
-Demographics,ordered,,,,
-Demographics,ordered,,,,
 Genetics,categorical,APOE,APOE Genotype,"testname, testvalue",Biospecimen_Analysis
 Genetics,numeric,APOE_e4,Number of e4 alleles in APOE Gene,"testname, testvalue",Biospecimen_Analysis
 ID,fundamental,COHORT,Cohort at Enrollment,COHORT,STATUS
 ID,fundamental,CONCOHORT,Analytic Cohort based on Consensus Committee review,CONCOHORT,STATUS
-ID,fundamental,PATNO,Participant ID ,PATNO,Multiple
-ID,fundamental,SITE,Blinded Site ID,CNO,Multiple
+ID,fundamental,PATNO,Participant ID,PATNO,Multiple
 ID,fundamental,subgroup,Subgroup(s) based on Consensus Committee review,"CONLRRK2, CONGBA, CONSNCA, CONPRKN, CONPINK1, CONRBD, CONHPSM",STATUS
-ID,fundamental,,,,
-ID,fundamental,,,,
-ID,fundamental,,,,
-ID,fundamental,,,,
 Milestones,binomial,pm_adl_any,Progression Milestones - Indicator for any activities of daily living milestone,*,Multiple
 Milestones,binomial,pm_any,Progression Milestones - Indicator for any milestone (any domain),*,Multiple
 Milestones,binomial,pm_auto_any,Progression Milestones - Indicator for any autonomic dysfunction milestone,*,Multiple
@@ -180,10 +90,3 @@ Milestones,binomial,pm_cog_any,Progression Milestones - Indicator for any cognit
 Milestones,binomial,pm_fd_any,Progression Milestones - Indicator for any functional dependence milestone,*,Multiple
 Milestones,binomial,pm_mc_any,Progression Milestones - Indicator for any motor complications milestone,*,Multiple
 Milestones,binomial,pm_wb_any,Progression Milestones - Indicator for any walking and balance milestone,*,Multiple
-Milestones,binomial,,,,
-Milestones,binomial,,,,
-Milestones,binomial,,,,
-Milestones,binomial,,,,
-Milestones,binomial,,,,
-Milestones,binomial,,,,
-Milestones,binomial,,,,

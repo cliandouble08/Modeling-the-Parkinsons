@@ -36,6 +36,10 @@ data_class_dictionary <- data_class_dictionary[!data_class_dictionary$Variable %
 # Remove some other variables
 data_class_dictionary <- data_class_dictionary[data_class_dictionary$Variable != "SITE", ]
 
+# Modify the table a little bit more 
+data_class_dictionary$`Data Class`[data_class_dictionary$Variable == "MCI_testscores"] <- "numeric"
+write_csv(data_class_dictionary, "data/ppmi_curated_data_dictionary_classified.csv")
+
 # Select portions of df_selected based on variable's data class
 numeric_vars <- data_class_dictionary$Variable[data_class_dictionary$`Data Class` %in% c('numeric', 'quantitative')]
 numeric_vars <- unique(c("PATNO", numeric_vars))
