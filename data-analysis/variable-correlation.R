@@ -1,8 +1,9 @@
 # Before any correlation test, add 1 to all CONCOHORT values
 # CONCOHORT originally has two levels of 0 and 1
-cor_df[] <- lapply(model_df, as.numeric)
+cor_df[] <- lapply(updated_numeric_df_selected, as.numeric) %>% 
+  na.omit()
 
-# Kendall's tau correlation
+# Calculate correlation
 pearson_cor <- cor(cor_df, method = "pearson")
 
 # Filter variables that have non-NA correlation with the other
