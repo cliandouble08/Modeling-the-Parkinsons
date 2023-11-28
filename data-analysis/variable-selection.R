@@ -1,4 +1,4 @@
-df_selected <- df %>% 
+df_selected <- df %>%  
   subset(select = -c(
     # Basic info
     SITE, EVENT_ID, YEAR, visit_date, age, 
@@ -53,6 +53,10 @@ fundamental_vars <- data_class_dictionary$Variable[data_class_dictionary$`Data C
 fundamental_vars <- unique(c("PATNO", fundamental_vars))
 
 numeric_df_selected <- df_selected[, numeric_vars, drop = FALSE]
+# Remove leading illegal characters from the variable name
+colnames(numeric_df_selected) <- gsub("^_", "", colnames(numeric_df_selected))
+colnames(numeric_df_selected) <- gsub("^[0-9]", "X\\0", colnames(numeric_df_selected))
+
 binomial_df_selected <- df_selected[, binomial_vars, drop = FALSE]
 ordered_df_selected <- df_selected[, ordered_vars, drop = FALSE]
 qualitative_df_selected <- df_selected[, qualitative_vars, drop = FALSE]

@@ -1,15 +1,12 @@
-# numeric_df_selected -----
-# Set aside PATNO column
-cols_to_adjust <- setdiff(names(numeric_df_selected), "PATNO")
-
-updated_numeric_df_selected <- numeric_df_selected
-
-# Change all columns to numeric class
-updated_numeric_df_selected[cols_to_adjust] <- lapply(updated_numeric_df_selected[cols_to_adjust], 
-                                                       function(x) as.numeric(as.character(x)))
-
-# Standardize all numeric columns
-updated_numeric_df_selected[cols_to_adjust] <- lapply(updated_numeric_df_selected[cols_to_adjust], scale)
+# # numeric_df_selected -----
+# # Set aside PATNO column
+# cols_to_adjust <- setdiff(names(numeric_df_selected), "PATNO")
+# 
+# updated_numeric_df_selected <- numeric_df_selected
+# 
+# # Change all columns to numeric class
+# updated_numeric_df_selected[cols_to_adjust] <- lapply(updated_numeric_df_selected[cols_to_adjust], 
+#                                                        function(x) as.numeric(as.character(x)))
 
 # binomial_df_selected -----
 ## Some binomial variables have levels of 1 and 2, while most columns have 0 and 1

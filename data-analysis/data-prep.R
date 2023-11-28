@@ -2,6 +2,25 @@
 raw_df <- read_csv("data/ppmi_curated_data.csv")
 raw_dictionary <- read_csv("data/ppmi_curated_data_dictionary.csv")
 
+# Change CONCOHORT classification dummies
+
+## Healthy control - 1
+## Prodromal - 2
+## PD - 3
+raw_df <- raw_df %>% 
+  mutate(CONCOHORT = case_when(
+    CONCOHORT == 2 ~ 1,
+    CONCOHORT == 4 ~ 2,
+    CONCOHORT == 1 ~ 3,
+    TRUE ~ CONCOHORT
+  ), 
+  COHORT = case_when(
+    COHORT == 2 ~ 1,
+    COHORT == 4 ~ 2,
+    COHORT == 1 ~ 3,
+    TRUE ~ COHORT
+  ))
+
 # Replace missing values as NA
 ## Function to replace "." with NA appropriately
 replace_dot_with_NA <- function(column) {
