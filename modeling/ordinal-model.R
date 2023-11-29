@@ -12,18 +12,16 @@ model_df_updated <- model_df %>%
   mutate(across(all_of(categorical_vars_selected), as.integer)) %>% 
   # Convert numerical columns to numeric
   mutate(across(all_of(selected_vars), as.numeric)) %>% 
-  mutate(CONCOHORT = as.integer(CONCOHORT + 1), 
-         X0_2__di_22_6_BMP = NULL, 
-         total_di_22_6_BMP = NULL)
+  mutate(CONCOHORT = as.integer(CONCOHORT + 1))
 model_df_na_free <- na.omit(model_df_updated) 
   
 # Complete-case ordinal model without linear regression
 ordinal_model_plain <- ulam(
   alist(
     CONCOHORT ~ dordlogit(0, cutpoints),
-    cutpoints ~ dnorm(0, 1.5)
+    cutpoints ~ dnorm(0, 10)
   ), data = model_df_na_free, 
-  chains = 4, warmup = 2000, iter = 4000, 
+  chains = 4, warmup = 5000, iter = 20000, 
   cores = 24, log_lik = TRUE, messages = FALSE
 )
 
@@ -41,9 +39,9 @@ ordinal_model <- ulam(
       # Numerical variables
       b_scopa * scopa + b_MSEADLG * MSEADLG + b_SDMTOTAL * SDMTOTAL + b_stai_state * stai_state +
       # Categorical variables
-      b_PDTRTMNT[PDTRTMNT] + b_td_pigd[td_pigd] + b_ASHKJEW[ASHKJEW] + b_hy[hy] + b_NHY[NHY] + b_NP1FATG[NP1FATG] + b_fampd[fampd], 
+      b_PDTRTMNT * PDTRTMNT + b_td_pigd * td_pigd + b_ASHKJEW * ASHKJEW + b_hy * hy + b_NHY * NHY + b_NP1FATG * NP1FATG + b_fampd * fampd, 
     
-    c(b_scopa, b_MSEADLG, b_SDMTOTAL, b_stai_state, b_PDTRTMNT[PDTRTMNT], b_td_pigd[td_pigd], b_ASHKJEW[ASHKJEW], b_hy[hy], b_NHY[NHY], b_NP1FATG[NP1FATG], b_fampd[fampd]) ~ dnorm(0, 2), 
+    c(b_scopa, b_MSEADLG, b_SDMTOTAL, b_stai_state, b_PDTRTMNT, b_td_pigd, b_ASHKJEW, b_hy, b_NHY, b_NP1FATG, b_fampd) ~ dnorm(0, 2), 
     
     cutpoints ~ dnorm(0, 1.5)
   ), data = model_df_na_free, 
