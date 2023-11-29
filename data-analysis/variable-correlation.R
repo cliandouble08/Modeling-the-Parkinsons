@@ -1,51 +1,77 @@
-# Before any correlation test, add 1 to all CONCOHORT values
-# CONCOHORT originally has two levels of 0 and 1
-cor_df[] <- lapply(updated_numeric_df_selected, as.numeric) %>% 
+# Numeric dataframe for correlation: updated_numeric_df_selected
+# updated_numeric_df_selected was already filtered with ANOVA test
+cor_df <- updated_numeric_df_selected %>% 
+  lapply(., as.numeric) %>% 
+  as.data.frame() %>% 
   na.omit()
 
-# Calculate correlation
+# Compute correlation coefficient
 pearson_cor <- cor(cor_df, method = "pearson")
 
-# Filter variables that have non-NA correlation with the other
-
-# Identify non-NA correlations
-non_na_pearson_cor <- !is.na(pearson_cor)
-
-# Remove diagonal values becasue the diagonal will always be 1
-diag(non_na_pearson_cor) <- FALSE
-
-# Extract variables with non-NA (TRUE) correlations
-cor_vars <- rownames(pearson_cor)[apply(non_na_pearson_cor, 1, any)]
-
-# Create a new cor_df with only correlated variables
-filtered_cor_df <- cor_df[, cor_vars, drop = FALSE]
-
-# New Kendall's tau coefficient calculated
-pearson_cor_filtered <- cor(filtered_cor_df, method = "pearson")
-
-filtered_cor_values <- as.vector(pearson_cor_filtered[upper.tri(pearson_cor_filtered)])
-
-filtered_cor_df <- as.data.frame(filtered_cor_values)
-filtered_cor_t <- t.test(filtered_cor_df$filtered_cor_values)
-
-lower_limit <- filtered_cor_t$conf.int[1]
-upper_limit <- filtered_cor_t$conf.int[2]
-
-png("figures/correlation/pearson_correlation_filtered.png",
-    width = 15000, height = 15000, res = 1500)
-pearson_cor_filtered_plot <- corrplot.mixed(pearson_cor_filtered, 
-                                            upper = "number", upper.col = viridis(10, option = "C"),
-                                            lower = "square", lower.col = viridis(10, option = "C"), 
-                                            tl.pos = "d",
-                                            tl.col = "black")
+# Plot in correlation matrix
+png("figures/pre-analysis/pearson_correlation.png",
+    width = 15000, height = 15000, res = 1000)
+pearson_cor_plot <- corrplot.mixed(pearson_cor, 
+                                   upper = "number", upper.col = viridis(20, option = "C"),
+                                   lower = "square", lower.col = viridis(20, option = "C"), 
+                                   tl.pos = "d",
+                                   tl.col = "black")
 dev.off()
 
-# Strong correlation between: 
-filtered_cor_values <- as.vector(pearson_cor_filtered[upper.tri(pearson_cor_filtered)])
+# Transform pearson_cor into dataframe
+cor_results <- as.data.frame(pearson_cor)
+cor_results$var1 <- rownames(cor_results)
+cor_results_df <- pivot_longer(cor_results, cols = -var1,
+                               names_to = "var2", values_to = "cor_coef")
 
-filtered_cor_df <- as.data.frame(filtered_cor_values)
-filtered_cor_t <- t.test(filtered_cor_df$filtered_cor_values)
+# Define 0.2 > r as weak correlation
+critical_cor <- 0.05
 
-lower_limit <- filtered_cor_t$conf.int[1]
-upper_limit <- filtered_cor_t$conf.int[2]
+# # Dataframe of variables with strong correlation
+# strong_cor_numeric_df <- cor_results_df %>%
+#   filter(critical_cor < cor_coef | -critical_cor > cor_coef) %>%
+#   filter(var1 != var2,
+#          var1 != "PATNO",
+#          var2 != "PATNO",
+#          !duplicated(cor_coef) | duplicated(cor_coef, fromLast = TRUE), 
+#          !var2 %in% var1)
 
+# Dataframe of variables with weak correlation
+weak_cor_numeric_df <- cor_results_df %>%
+  filter(-critical_cor < cor_coef & critical_cor > cor_coef) %>%
+  # Select only one row out of two that have the same correlation (i.e., same pair but flipped)
+  filter(!duplicated(cor_coef) | duplicated(cor_coef, fromLast = TRUE))
+
+selected_vars <- unique(c(weak_cor_numeric_df$var1, weak_cor_numeric_df$var2))
+
+# Create the final filtered numeric dataframe
+final_numeric_df_selected <- updated_numeric_df_selected[, selected_vars, drop = FALSE] %>% 
+  mutate(PATNO = as.character(PATNO))
+
+# Plot variables selected by correlation
+plot_numeric_df <- cor_results_df %>% 
+  filter(!duplicated(cor_coef) | duplicated(cor_coef, fromLast = TRUE)) %>% 
+  mutate(color = ifelse(-critical_cor < cor_coef & critical_cor > cor_coef, 
+                        "Weak Correlation", "Strong Correlation"))
+
+# Plot the results
+numeric_correlation_plot <- ggplot(data = plot_numeric_df, aes(x = 1, y = cor_coef)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(aes(col = color), 
+             position = position_jitter(width = 0.2)) +
+  geom_hline(yintercept = critical_cor, color = "darkred", linetype = "dashed", lwd = 1) +
+  geom_text(aes(x = Inf, y = critical_cor, label = paste("Critical r = ", format(critical_cor, digits = 3))), 
+            vjust = 1.5, hjust = 1, color = "darkred", size = rel(3)) +
+  
+  theme_classic() +
+  scale_y_log10() +
+  scale_color_manual(values = c("Strong Correlation" = "red", 
+                                "Weak Correlation" = "black")) +
+  labs(y = "Correlation Coefficient", 
+       x = NULL) +
+  theme(legend.position = "none", 
+        axis.text.x = element_blank())
+
+ggsave("figures/pre-analysis/numeric_correlation.png", 
+       plot = numeric_correlation_plot,
+       width = 5, height = 5, dpi = 1000)

@@ -19,9 +19,19 @@ for (variable in setdiff(names(numeric_df_selected_CONCOHORT), "CONCOHORT")) {
   anova_results <- rbind(anova_results, new_row)
 }
 
-# Filter for significant associations
+# Test confidence interval for the p-values
+t_test <- t.test(anova_results$p_value)
+upper_limit <- t_test$conf.int[2]
+# Still very large upper limit because of the almost flat distribution of p-value
+plot(anova_results$p_value)
+
+# Calculate the median of p-values
+summary_pvalue <- summary(anova_results$p_value)
+first_qua <- summary_pvalue["1st Qu."]
+
+# Filter for significant associations (i.e., with p-value smaller than the upper_limit)
 significant_anova_results <- anova_results %>%
-  filter(p_value <= 0.00001)  # Adjust the significance level as needed
+  filter(p_value <= first_qua)
 
 # Display the ANOVA results
 head(anova_results)

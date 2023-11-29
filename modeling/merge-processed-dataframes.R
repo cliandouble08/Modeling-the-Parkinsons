@@ -16,8 +16,8 @@ categorical_df <- as.data.frame(categorical_df)
 ## Variables with significant association to CONCOHORT were returned in categorical_df_selected
 
 # Merge all dataframes for modeling
-model_df <- merge(categorical_df_selected, # All categorical predictors
-                  updated_numeric_df_selected, # Numeric predictors (standardized)
+model_df <- merge(final_numeric_df_selected, # All categorical predictors
+                  categorical_df_selected, # Numeric predictors (standardized)
                   by = "PATNO", all = TRUE)
 model_df <- merge(model_df,
                   response_var_df, # CONCOHORT (response)
