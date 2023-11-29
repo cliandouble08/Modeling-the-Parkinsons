@@ -12,6 +12,7 @@ model_df_updated <- model_df %>%
   mutate(across(all_of(categorical_vars_selected), as.integer)) %>% 
   # Convert numerical columns to numeric
   mutate(across(all_of(selected_vars), as.numeric)) %>% 
+  dplyr::select(-c(PDTRTMNT, ASHKJEW, hy, upsit)) %>% 
   mutate(CONCOHORT = as.integer(CONCOHORT + 1))
 model_df_na_free <- na.omit(model_df_updated) 
   
@@ -32,6 +33,15 @@ precis(ordinal_model_plain, depth = 2)
 plain_ordinal_cutpoints_inv_logit <- format(inv_logit(coef(ordinal_model_plain)), digits = 3)
 
 # Complete-case ordinal model with linear regression
+test_model <- ulam(
+  alist(
+    CONCOHORT ~ dordlogit(phi, cutpoints),
+    phi <- b_scopa * scopa + b_PDTRTMNT[PDTRTMNT], 
+    b_scopa ~ dnorm(0, 1), 
+    b_PDTRTMNT[PDTRTMNT] ~ dnorm(0, 1), 
+    cutpoints ~ dnorm(0, 1)
+  ), data = model_df_na_free
+)
 ordinal_model <- ulam(
   alist(
     CONCOHORT ~ dordlogit(phi, cutpoints),
