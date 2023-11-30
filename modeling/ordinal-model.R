@@ -22,7 +22,7 @@ ordinal_model_plain <- ulam(
     CONCOHORT ~ dordlogit(0, cutpoints),
     cutpoints ~ dnorm(0, 10)
   ), data = model_df_na_free, 
-  chains = 4, warmup = 5000, iter = 20000, 
+  chains = 24, warmup = 1.5e4, iter = 1e6, 
   cores = 24, log_lik = TRUE, messages = FALSE
 )
 
@@ -32,35 +32,53 @@ precis(ordinal_model_plain, depth = 2)
 # `inv_logit(coef(ordinal_model))` gives the cumulative-proportion for each response
 plain_ordinal_cutpoints_inv_logit <- format(inv_logit(coef(ordinal_model_plain)), digits = 3)
 
+# Extract samples
+plain_ordinal_posterior <- extract.samples(ordinal_model_plain)
+
 # Complete-case ordinal model with linear regression
-test_model <- ulam(
-  alist(
-    CONCOHORT ~ dordlogit(phi, cutpoints),
-    phi <- b_scopa * scopa + b_PDTRTMNT[PDTRTMNT], 
-    b_scopa ~ dnorm(0, 1), 
-    b_PDTRTMNT[PDTRTMNT] ~ dnorm(0, 1), 
-    cutpoints ~ dnorm(0, 1)
-  ), data = model_df_na_free
-)
 ordinal_model <- ulam(
   alist(
     CONCOHORT ~ dordlogit(phi, cutpoints),
     phi <-
       # Numerical variables
-      b_scopa * scopa + b_MSEADLG * MSEADLG + b_SDMTOTAL * SDMTOTAL + b_stai_state * stai_state +
+      b_scopa * scopa + b_SDMTOTAL * SDMTOTAL + b_stai_state * stai_state + b_updrs_totscore * updrs_totscore +
       # Categorical variables
-      b_PDTRTMNT * PDTRTMNT + b_td_pigd * td_pigd + b_ASHKJEW * ASHKJEW + b_hy * hy + b_NHY * NHY + b_NP1FATG * NP1FATG + b_fampd * fampd, 
+      b_td_pigd[td_pigd] + b_NHY[NHY] + b_NP1FATG[NP1FATG], 
     
-    c(b_scopa, b_MSEADLG, b_SDMTOTAL, b_stai_state, b_PDTRTMNT, b_td_pigd, b_ASHKJEW, b_hy, b_NHY, b_NP1FATG, b_fampd) ~ dnorm(0, 2), 
+    c(b_scopa, b_SDMTOTAL, b_stai_state, b_updrs_totscore) ~ dnorm(0, 3),
+    b_td_pigd[td_pigd] ~ dnorm(0, 3), 
+    b_NHY[NHY] ~ dnorm(0, 3),
+    b_NP1FATG[NP1FATG] ~ dnorm(0, 3),
     
     cutpoints ~ dnorm(0, 1.5)
   ), data = model_df_na_free, 
-  chains = 4, warmup = 2000, iter = 4000, 
+  chains = 12, warmup = 3000, iter = 10000, 
   cores = 24, log_lik = TRUE, messages = FALSE
+)
+
+test_ordinal_model <- ulam(
+  alist(
+    CONCOHORT ~ dordlogit(phi, cutpoints),
+    phi <-
+      # Numerical variables
+      b_scopa * scopa + b_SDMTOTAL * SDMTOTAL + b_stai_state * stai_state + b_updrs_totscore * updrs_totscore +
+      # Categorical variables
+      b_td_pigd[td_pigd] + b_NHY[NHY] + b_NP1FATG[NP1FATG],
+    
+    c(b_scopa, b_SDMTOTAL, b_stai_state, b_updrs_totscore) ~ dnorm(0, 2),
+    b_td_pigd[td_pigd] ~ dnorm(0, 2), 
+    b_NHY[NHY] ~ dnorm(0, 2),
+    b_NP1FATG[NP1FATG] ~ dnorm(0, 2),
+    
+    cutpoints ~ dnorm(0, 1.5)
+  ), data = model_df_na_free, 
+  chains = 7, 
+  cores = 24, log_lik = TRUE
 )
 
 precis(ordinal_model, depth = 2)
 cutpoints_inv_logit <- format(inv_logit(coef(ordinal_model)), digits = 3)
+ordinal_posterior <- extract.samples(ordinal_model)
 
 # Store the model trace plot
 png("figures/modeling/ordinal-model/complete_case_trace_plot.png",
