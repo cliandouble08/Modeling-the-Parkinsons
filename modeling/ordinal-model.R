@@ -38,10 +38,13 @@ plain_ordinal_posterior <- extract.samples(ordinal_model_plain)
 # Complete-case ordinal model with linear regression
 ordinal_model <- ulam(
   alist(
+    # Ordinal model
     CONCOHORT ~ dordlogit(phi, cutpoints),
     phi <-
       # Numerical variables
-      b_scopa * scopa + b_SDMTOTAL * SDMTOTAL + b_stai_state * stai_state + b_updrs_totscore * updrs_totscore +
+      b_scopa * scopa + b_SDMTOTAL * SDMTOTAL + 
+      b_stai_state * stai_state + b_updrs_totscore * updrs_totscore +
+      
       # Categorical variables
       b_td_pigd[td_pigd] + b_NHY[NHY] + b_NP1FATG[NP1FATG], 
     
@@ -52,9 +55,17 @@ ordinal_model <- ulam(
     
     cutpoints ~ dnorm(0, 1.5)
   ), data = model_df_na_free, 
-  chains = 12, warmup = 3000, iter = 10000, 
-  cores = 24, log_lik = TRUE, messages = FALSE
+  chains = 24, warmup = 3000, iter = 15000, 
+  cores = 24, log_lik = TRUE
 )
+
+ordinal_precis <- precis(ordinal_model, depth = 2)
+cutpoints_inv_logit <- format(inv_logit(coef(ordinal_model)), digits = 3)
+
+ordinal_posterior <- extract.samples(ordinal_model)
+
+# Store traceplots into multiple files
+source("modeling/store-traceplots.R")
 
 test_ordinal_model <- ulam(
   alist(
@@ -72,19 +83,9 @@ test_ordinal_model <- ulam(
     
     cutpoints ~ dnorm(0, 1.5)
   ), data = model_df_na_free, 
-  chains = 7, 
+  chains = 20, 
   cores = 24, log_lik = TRUE
 )
-
-precis(ordinal_model, depth = 2)
-cutpoints_inv_logit <- format(inv_logit(coef(ordinal_model)), digits = 3)
-ordinal_posterior <- extract.samples(ordinal_model)
-
-# Store the model trace plot
-png("figures/modeling/ordinal-model/complete_case_trace_plot.png",
-    width = 10, height = 10, units = "in", res = 1000)
-traceplot(ordinal_model)
-dev.off()
 
 ## Missing value-imputed model -----
 # For missing values: Statistical Rethinking, Chapter 15.2.2

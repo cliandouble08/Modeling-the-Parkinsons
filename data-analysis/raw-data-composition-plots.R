@@ -1,11 +1,12 @@
 # Density plot for na_proportion
 density_plot_na_proportion <- ggplot(data = naCount_raw_df) +
-  geom_density(aes(x = na_proportion), lwd = 0.8) +
-  geom_vline(xintercept = 0.10, linetype = "dashed") +
+  geom_rect(aes(xmin = 0.10, xmax = Inf, ymin = -Inf, ymax = Inf), fill = "lightpink", alpha = 0.1) +
+  geom_density(aes(x = na_proportion), lwd = 1) +
+  # geom_vline(xintercept = 0.10, linewidth = 1, linetype = "dashed", color = "darkred", alpha = 0.5) +
   xlim(0, 1) +
   labs(x = "Proportion of NA values", 
        y = "Density") +
-  theme_classic()
+  theme_par()
 
 ggsave("figures/pre-analysis/density-na-proportion.png", 
        plot = density_plot_na_proportion,
@@ -45,13 +46,14 @@ pie_chart_column_class <- ggplot(df_column_class_summary,
             size = 3) +
   coord_polar(theta = "y") +
   xlim(1, 4) +
-  labs(fill = "Column Class", 
+  labs(fill = "Varialbe Class", 
        y = "Class Proportion", 
-       x = "") +
+       x = NULL) +
   scale_fill_viridis(discrete = TRUE) +
-  theme_classic() +
+  theme_par() +
   theme(axis.text.x = element_blank(), 
-        axis.text.y = element_blank())
+        axis.text.y = element_blank(), 
+        legend.position = "left")
 
 ggsave("figures/pre-analysis/pie_column_class.png", 
        plot = pie_chart_column_class,

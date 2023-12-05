@@ -58,9 +58,9 @@ chi_square_results_plot <- ggplot(data = chi_square_results_CONCOHORT,
              position = position_jitter(width = 0.2)) +
   geom_hline(yintercept = upper_limit, color = "darkred", linetype = "dashed", lwd = 1) +
   geom_text(aes(x = Inf, y = upper_limit, label = paste("p-value = ", format(upper_limit, scientific = TRUE, digits = 3))), 
-            vjust = 1.5, hjust = 1, color = "darkred", size = rel(3)) +
+            vjust = 1.5, hjust = 1.02, color = "darkred", size = rel(3)) +
   
-  theme_classic() +
+  theme_par() +
   scale_y_log10() +
   scale_color_manual(values = c("Insignificant Association" = "red", 
                                 "Significant Association" = "black")) +
