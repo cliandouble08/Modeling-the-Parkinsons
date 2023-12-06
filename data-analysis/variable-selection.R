@@ -19,7 +19,8 @@ df_selected <- df %>%
     # Factor-adjusted score percentile
     upsit_pctl, upsit_pctl15, 
     # Others
-    PRIMDIAG, duration, duration_yrs, DOMSIDE))
+    PRIMDIAG, duration, duration_yrs, DOMSIDE)) %>% 
+  mutate(age_at_visit = as.numeric(age_at_visit))
 
 # A new data dictionary for df_selected was created as imported
 # Variables are classified by their properties as listed in Data Class column
@@ -51,6 +52,7 @@ qualitative_vars <- data_class_dictionary$Variable[data_class_dictionary$`Data C
 qualitative_vars <- unique(c("PATNO", qualitative_vars))
 fundamental_vars <- data_class_dictionary$Variable[data_class_dictionary$`Data Class` == "fundamental"]
 fundamental_vars <- unique(c("PATNO", fundamental_vars))
+fundamental_vars <- unique(c("age_at_visit", fundamental_vars))
 
 numeric_df_selected <- df_selected[, numeric_vars, drop = FALSE]
 # Remove leading illegal characters from the variable name
@@ -61,6 +63,7 @@ binomial_df_selected <- df_selected[, binomial_vars, drop = FALSE]
 ordered_df_selected <- df_selected[, ordered_vars, drop = FALSE]
 qualitative_df_selected <- df_selected[, qualitative_vars, drop = FALSE]
 fundamental_df_selected <- df_selected[, fundamental_vars, drop = FALSE]
+fundamental_df_selected$age_at_visit <- standardize(fundamental_df_selected$age_at_visit)
 
 # Include binomal, ordered, and qualitative varaibles into all_qualitative_df_selected
 all_qualitative_df_selected <- merge(binomial_df_selected, ordered_df_selected, by = "PATNO")

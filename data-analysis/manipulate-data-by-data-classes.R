@@ -63,7 +63,7 @@ updated_qualitative_df_selected[cols_to_adjust] <- lapply(updated_qualitative_df
 ## Center all columns to 0 after converting to dummy variables
 
 # Set aside PATNO column
-cols_to_adjust <- setdiff(names(fundamental_df_selected), "PATNO")
+cols_to_adjust <- setdiff(names(fundamental_df_selected), c("age_at_visit", "PATNO"))
 
 updated_fundamental_df_selected <- fundamental_df_selected
 
@@ -81,5 +81,5 @@ updated_fundamental_df_selected[cols_to_adjust] <- lapply(updated_fundamental_df
 ## Only columns: PATNO, CONCOHORT
 ## Remove rows with CONCOHORT NA
 response_var_df <- updated_fundamental_df_selected %>% 
-  select(PATNO, CONCOHORT) %>% 
+  dplyr::select(PATNO, CONCOHORT, age_at_visit) %>% 
   filter(!is.na(CONCOHORT))
