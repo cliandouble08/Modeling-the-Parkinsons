@@ -63,56 +63,38 @@ ordinal_model <- ulam(
 ordinal_precis <- precis(ordinal_model, depth = 2)
 cutpoints_inv_logit <- format(inv_logit(coef(ordinal_model)), digits = 3)
 
-ordinal_posterior <- extract.samples(ordinal_model)
+# Plot effect size for each explanatory variable
+png(filename = "figures/modeling/posterior/posterior_precis.png", 
+    width = 5, height = 5, units = "in", res = 1000)
+plot(ordinal_precis)
+dev.off()
 
-# Store traceplots into multiple files
-source("modeling/store-traceplots.R")
+# Plot cumulative proportion by cutpoints
+cutpoints_posterior <- as.data.frame(ordinal_posterior[["cutpoints"]])
 
-test_ordinal_model <- ulam(
-  alist(
-    CONCOHORT ~ dordlogit(phi, cutpoints),
-    phi <-
-      # Numerical variables
-      b_scopa * scopa + b_SDMTOTAL * SDMTOTAL + b_stai_state * stai_state + b_updrs_totscore * updrs_totscore +
-      # Categorical variables
-      b_td_pigd[td_pigd] + b_NHY[NHY] + b_NP1FATG[NP1FATG],
-    
-    c(b_scopa, b_SDMTOTAL, b_stai_state, b_updrs_totscore) ~ dnorm(0, 2),
-    b_td_pigd[td_pigd] ~ dnorm(0, 2), 
-    b_NHY[NHY] ~ dnorm(0, 2),
-    b_NP1FATG[NP1FATG] ~ dnorm(0, 2),
-    
-    cutpoints ~ dnorm(0, 1.5)
-  ), data = model_df_na_free, 
-  chains = 20, 
-  cores = 24, log_lik = TRUE
+cutpoint_1 <- mean(cutpoints_posterior$V1)
+cutpoint_2 <- mean(cutpoints_posterior$V2)
+
+invlogit_cutpoint_1 <- inv_logit(cutpoint_1)
+invlogit_cutpoint_2 <- inv_logit(cutpoint_2)
+
+cumulative_posterior <- data.frame(
+  level = c(0, 1, 2, 3),
+  value = c(0, as.numeric(invlogit_cutpoint_1), as.numeric(invlogit_cutpoint_2), 1)
 )
 
-## Missing value-imputed model -----
-# For missing values: Statistical Rethinking, Chapter 15.2.2
-# Each missing value is assigned with a parameter
-ordinal_model <- ulam(
-  alist(
-    CONCOHORT ~ dordlogit(mu, cutpoints), 
-    mu <- a + b1 * B + b2 * C, 
-    
-    # Impute missing values by correlation between B and C
-    MB ~ multi_normal( c(muc,mub) , Rho_Bc , Sigma_Bc),
-    matrix[29,2]:BC <<- append_col(C , B),
-    # Define B1 as mix of observed and imputed values
-    vector[29]:B <- merge_missing(B, B_impute), 
-    
-    c(a, muc, mub) ~ dnorm(0, 1.5), 
-    c(b1, b2) ~ dnorm(0, 1.5),
-    
-    sigma ~ dexp(1)
-    Rho_Bc ~ lkj_corr(2), 
-    Sigma_Bc ~ dexp(1)
-    
-    cutpoints ~ dnorm(0, 1.5)
-  ), data = model_df, 
-  chains = 8, warmup = 5000, iter = 15000, 
-  cores = 24, log_lik = TRUE, messages = FALSE
-)
-
-traceplot(ordinal_model)
+ggplot(data = cumulative_posterior, 
+       mapping = aes(x = level, y = value)) +
+  geom_point() +
+  geom_text(aes(label = format(value, digits = 2)), vjust = -1.0, hjust = 0.5, size = 3) +
+  geom_line() +
+  
+  theme_par() +
+  labs(title = "Cumulative Proportion for Each Cohort", 
+       x = "Cohort", 
+       y = "Cumulative proportion") +
+  ylim(0, 1.2)
+ggsave(file = "figures/modeling/posterior/cumulative-proportions.png", 
+       last_plot(), 
+       width = 5, height = 5, dpi = 1000)
+dev.off()
