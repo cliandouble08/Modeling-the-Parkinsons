@@ -10,24 +10,31 @@ response_var_summary <- response_var_df %>%
 
 # Description of frequency overlay with proportions
 max_count <- max(response_var_summary$count)
-ordinal_frequency_proportion_plot <- ggplot(data = response_var_summary) +
+update_response_var_summary <- response_var_summary %>% 
+  mutate(CONCOHORT = CONCOHORT + 1)
+
+ggplot(data = update_response_var_summary) +
   geom_bar(aes(x = CONCOHORT, y = count), 
            stat = "identity", alpha = 0.1) +
   
   geom_point(aes(x = CONCOHORT, y = proportion * max_count, col = "Proportion"), size = 3) +
   geom_line(aes(x = CONCOHORT, y = proportion * max_count, col = "Proportion"), linewidth = 1) +
   
-  geom_point(aes(x = CONCOHORT, y = cum_proportion * max_count, col = "Cumulative Proportion"), size = 3) +
-  geom_line(aes(x = CONCOHORT, y = cum_proportion * max_count, col = "Cumulative Proportion"), linewidth = 1) +
+  # geom_point(aes(x = CONCOHORT, y = cum_proportion * max_count, col = "Cumulative Proportion"), size = 3) +
+  # geom_line(aes(x = CONCOHORT, y = cum_proportion * max_count, col = "Cumulative Proportion"), linewidth = 1) +
   
   theme_classic() +
   scale_color_viridis_d(name = element_blank()) +
   scale_y_continuous(name = "Frequency", 
                      sec.axis = sec_axis(~. / max_count, name = "Proportion (%)")) +
-  theme(legend.position = "left") +
+  theme(legend.position = "bottom") +
   labs(x = "Cohort")
+ggsave(file = "figures/modeling/data-description/cumulative-proportion.png", 
+       last_plot(), 
+       width = 5, height = 5, dpi = 1000)
+dev.off()
 
-log_cum_odds_plot <- ggplot(data = response_var_summary) +
+log_cum_odds_plot <- ggplot(data = update_response_var_summary) +
   geom_point(aes(x = CONCOHORT, y = log_cum_odd), stat = "identity", size = 3) +
   geom_line(aes(x = CONCOHORT, y = log_cum_odd), lwd = 1) +
   
@@ -35,6 +42,10 @@ log_cum_odds_plot <- ggplot(data = response_var_summary) +
   ylim(-2, 2) +
   labs(x = "Cohort", 
        y = "Log(Cumulative Odds)")
+ggsave(file = "figures/modeling/data-description/log_cumulative_odds.png", 
+       last_plot(), 
+       width = 5, height = 5, dpi = 1000)
+dev.off()
 
 # Overlay with the likelihood for each concohort
 diff_response_var_summary <- response_var_summary %>% 
